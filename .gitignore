@@ -1,0 +1,4 @@
+build/
+testing/
+testing*/
+.vscode/
