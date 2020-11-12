@@ -1,3 +1,13 @@
+/************************************************
+ *                                              *
+ *                rs@md                         *
+ *    (reactive steps @ molecular dynamics )    *
+ *                                              *
+ ************************************************/
+/* 
+ Copyright 2020 Myra Biedermann
+ Licensed under the Apache License, Version 2.0 
+*/
 
 #pragma once
 
@@ -5,7 +15,6 @@
 #include "container/atom.hpp"
 
 #include <cmath>
-
 
 // 
 // some useful math functions

@@ -1,5 +1,15 @@
-#pragma once
+/************************************************
+ *                                              *
+ *                rs@md                         *
+ *    (reactive steps @ molecular dynamics )    *
+ *                                              *
+ ************************************************/
+/* 
+ Copyright 2020 Myra Biedermann
+ Licensed under the Apache License, Version 2.0 
+*/
 
+#pragma once
 
 #include "definitions.hpp"
 #include "control/simulatorMetropolis.hpp"
@@ -15,14 +25,12 @@
 
 #include <atomic>
 
-
 //
 // controller class
 // 
 // performs signal handling
 // holds the simulator class
 //
-
 
 class Controller
 {

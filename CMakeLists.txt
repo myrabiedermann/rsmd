@@ -1,7 +1,17 @@
+# ************************************************ #
+# *                                              * #
+# *                rs@md                         * #
+# *    (reactive steps @ molecular dynamics )    * #
+# *                                              * #
+# ************************************************ #
+#
+# Copyright 2020 Myra Biedermann
+# Licensed under the Apache License, Version 2.0 
+#
+
 project(rsmd)
+
 cmake_minimum_required(VERSION 3.6)
-
-
 set( CMAKE_CXX_STANDARD 17 )
 
 message( STATUS "CMAKE_C_COMPILER: ${CMAKE_C_COMPILER}" )

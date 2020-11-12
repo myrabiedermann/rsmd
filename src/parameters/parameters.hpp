@@ -1,3 +1,14 @@
+/************************************************
+ *                                              *
+ *                rs@md                         *
+ *    (reactive steps @ molecular dynamics )    *
+ *                                              *
+ ************************************************/
+/* 
+ Copyright 2020 Myra Biedermann
+ Licensed under the Apache License, Version 2.0 
+*/
+
 #pragma once
 
 #include "definitions.hpp"
@@ -17,11 +28,9 @@
 // ... and implements getter functions for all options
 //
 
-
 enum ENGINE { NONE, GROMACS };
 enum SIMMODE { NEW, RESTART };
 enum SIMALGORITHM { RATE, MC };
-
 
 class Parameters
 {
@@ -33,7 +42,8 @@ class Parameters
     SIMALGORITHM    simulationAlgorithm {SIMALGORITHM::MC};
 
     std::string programName {"                     * * * * * * *\n                     *   rs@md   *\n                     * * * * * * *\n\n"};
-
+    std::string addDescription {"a program to perform reactive steps during molecular dynamics simulations\n"};
+    std::string licensingInfo {"Copyright 2020 Myra Biedermann\nLicensed under the Apache License, Version 2.0\n"};
     //
     // read program options from commandline / from file
     //

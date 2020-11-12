@@ -1,8 +1,17 @@
+/************************************************
+ *                                              *
+ *                rs@md                         *
+ *    (reactive steps @ molecular dynamics )    *
+ *                                              *
+ ************************************************/
+/* 
+ Copyright 2020 Myra Biedermann
+ Licensed under the Apache License, Version 2.0 
+*/
+
 #pragma once
 
-
 #include "control/simulatorBase.hpp"
-
 #include <unordered_map>
 
 //
@@ -12,7 +21,6 @@
 // implements reactiveStep() for a 
 // hybrid MC/MD simulation with rate based acceptance criterion
 //
-
 
 class SimulatorRate : public SimulatorBase
 {

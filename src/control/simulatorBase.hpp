@@ -1,5 +1,15 @@
-#pragma once
+/************************************************
+ *                                              *
+ *                rs@md                         *
+ *    (reactive steps @ molecular dynamics )    *
+ *                                              *
+ ************************************************/
+/* 
+ Copyright 2020 Myra Biedermann
+ Licensed under the Apache License, Version 2.0 
+*/
 
+#pragma once
 
 #include "definitions.hpp"
 #include "unitSystem.hpp"
@@ -8,14 +18,12 @@
 #include "engine/engineGMX.hpp"
 #include "parser/energyParserGMX.hpp"
 
-
 //
 // SimulatorBase class
 // 
 // a base class that implements the interface
 // for all methods that perform simulations
 //
-
 
 class SimulatorBase
 {

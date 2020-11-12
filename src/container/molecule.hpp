@@ -1,3 +1,13 @@
+/************************************************
+ *                                              *
+ *                rs@md                         *
+ *    (reactive steps @ molecular dynamics )    *
+ *                                              *
+ ************************************************/
+/* 
+ Copyright 2020 Myra Biedermann
+ Licensed under the Apache License, Version 2.0 
+*/
 
 #pragma once
 
@@ -8,7 +18,6 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
-
 
 //
 // molecule container
@@ -71,8 +80,6 @@ class Molecule
 
     friend inline std::ostream& operator << (std::ostream&, const Atom&);
 };
-
-
 
 
 inline std::ostream& operator<<(std::ostream& os, const Molecule& obj)

@@ -1,3 +1,13 @@
+/************************************************
+ *                                              *
+ *                rs@md                         *
+ *    (reactive steps @ molecular dynamics )    *
+ *                                              *
+ ************************************************/
+/* 
+ Copyright 2020 Myra Biedermann
+ Licensed under the Apache License, Version 2.0 
+*/
 
 #pragma once 
 
@@ -8,7 +18,6 @@
 #include <algorithm>
 #include <numeric>
 
-
 //
 // topology container
 //
@@ -16,7 +25,6 @@
 // contains molecules and all kind of useful methods that work with/on these molecules
 //          + box dimensions
 //
-
 
 class Topology
     : public ContainerBase< std::vector<Molecule> >
@@ -135,7 +143,6 @@ class Topology
     //
     friend inline std::ostream& operator<<(std::ostream& os, const Topology& obj);
 };
-
 
 
 inline std::ostream& operator<<(std::ostream& os, const Topology& obj)

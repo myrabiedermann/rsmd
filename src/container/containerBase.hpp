@@ -1,8 +1,17 @@
+/************************************************
+ *                                              *
+ *                rs@md                         *
+ *    (reactive steps @ molecular dynamics )    *
+ *                                              *
+ ************************************************/
+/* 
+ Copyright 2020 Myra Biedermann
+ Licensed under the Apache License, Version 2.0 
+*/
 
 #pragma once
 
 #include <iterator>
-
 
 //
 // a container base class to derive from
@@ -11,7 +20,6 @@
 // for use in loops
 // as well as container-related operators like [] and ()
 //
-
 
 template<typename T>
 struct ContainerBase

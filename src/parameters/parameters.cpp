@@ -1,5 +1,15 @@
-#include "parameters/parameters.hpp"
+/************************************************
+ *                                              *
+ *                rs@md                         *
+ *    (reactive steps @ molecular dynamics )    *
+ *                                              *
+ ************************************************/
+/* 
+ Copyright 2020 Myra Biedermann
+ Licensed under the Apache License, Version 2.0 
+*/
 
+#include "parameters/parameters.hpp"
 
 //
 // constructor
@@ -120,8 +130,10 @@ void Parameters::read(int argc, char* argv[])
         if( getOption("credits").as<bool>() )
         {
             std::cout << programName
-                      << "a program to perform reactive steps during molecular dynamics simulations \n\n"
-                      << "implementation:       Myra Biedermann\n"
+                      << addDescription
+                      << "\n"
+                      << licensingInfo
+                      << "\n"
                       << "please read and cite: <to be published>\n";
         }
         else if( getOption("reaction").as<bool>() )
@@ -139,7 +151,9 @@ void Parameters::read(int argc, char* argv[])
         else
         {
             std::cout << programName
-                      << "a program to perform reactive steps during molecular dynamics simulations \n";
+                      << addDescription
+                      << '\n'
+                      << licensingInfo;
             std::cout << '\n' << generalOptions;
             std::cout << '\n' << simulationOptions;
             std::cout << '\n' << reactionOptions;
@@ -157,7 +171,10 @@ void Parameters::read(int argc, char* argv[])
     if( argc == 1 )
     {
         std::cout << programName   
-                  << "a program to perform reactive molecular dynamics simulations \n\n"
+                  << addDescription
+                  << "\n"
+                  << licensingInfo
+                  << "\n"
                   << "please specify some program options!\n"
                   << "(you can use the --help flag for further information)\n";
         std::exit(EXIT_FAILURE);

@@ -1,6 +1,15 @@
+/************************************************
+ *                                              *
+ *                rs@md                         *
+ *    (reactive steps @ molecular dynamics )    *
+ *                                              *
+ ************************************************/
+/* 
+ Copyright 2020 Myra Biedermann
+ Licensed under the Apache License, Version 2.0 
+*/
 
 #include "container/molecule.hpp"
-
 
 //
 // atom getters
@@ -12,7 +21,6 @@ const Atom& Molecule::getAtom(std::size_t id) const
     if( it == end() )   rsmdCRITICAL("couldn't find atom " << id << " in molecule " << this->molid);
     return std::cref(*it);
 }
-
 
 //
 // remove atoms from this molecule
@@ -27,7 +35,6 @@ void Molecule::removeAtom(std::size_t id)
     // attention: removes all atoms that have identifier id
     data.erase( std::remove_if(begin(), end(), [&](auto& a){ return id == a.id; }), end() );
 }
-
 
 //
 // check if molecule contains a specific atom
