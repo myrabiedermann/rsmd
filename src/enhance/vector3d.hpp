@@ -7,6 +7,13 @@
 /* 
  Copyright 2020 Myra Biedermann
  Licensed under the Apache License, Version 2.0 
+
+ Parts of the code within this file was modified from "point.hpp"
+ within github repository https://github.com/simonraschke/vesicle2.git,
+ licensed under Apache License Version 2.0
+
+ Myra Biedermann thankfully acknowledges support 
+ from Simon Raschke.
 */
 
 #pragma once
