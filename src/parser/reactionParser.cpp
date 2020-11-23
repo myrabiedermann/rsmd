@@ -40,6 +40,11 @@ ReactionBase ReactionParser::read(const std::string& reactionFile)
                 // empty line --> skip
                 continue;
             }
+			else if( line.find_first_not_of(" \t\n\v\f\r") == std::string::npos )
+			{
+				// line contains only spaces --> skip
+				continue;
+			}
             else if( line[line.find_first_not_of(' ')] == '#' )
             {
                 // comment line --> skip
