@@ -115,11 +115,17 @@ void ReactionCandidate::applyTranslations()
         // first: compute connection vector between atoms
         REALVEC vector = products[tt.indices2.first](tt.indices2.second).position 
                        - products[tt.indices1.first](tt.indices1.second).position;
+		REAL distance = vector.norm();
         vector /= vector.norm();
         rsmdDEBUG( "    position before: " << products[tt.indices1.first](tt.indices1.second).position );
-        // second: translate atom along the connection vector
+        rsmdLOG( "    distance before: " << distance );
+		// second: translate atom along the connection vector
         products[tt.indices1.first](tt.indices1.second).position += tt.value * vector;
-        rsmdDEBUG( "    position after: " << products[tt.indices1.first](tt.indices1.second).position );
+        vector = products[tt.indices2.first](tt.indices2.second).position
+			   - products[tt.indices1.first](tt.indices1.second).position;
+		distance = vector.norm();
+		rsmdDEBUG( "    position after: " << products[tt.indices1.first](tt.indices1.second).position );
+		rsmdLOG( "    distance after: " << distance );
     }
 }
 
