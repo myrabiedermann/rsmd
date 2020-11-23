@@ -48,7 +48,7 @@ def read_reactions_file(*, file):
                 index = line.find("#");
                 line = line[:index]
             ## second: parse content of line
-            elif "products" in currentDirective:
+            if "products" in currentDirective:
                 ## # molNr      molName     atomName    atomNr  origin->molNr   origin->atomNr
                 inputs = line.split()
                 transitionTable.append([int(inputs[0])-1, int(inputs[3])-1, inputs[1], inputs[2], int(inputs[4])-1, int(inputs[5])-1])
@@ -147,7 +147,7 @@ def perform_reaction(*, coordinatesFile, reactandIDs, transitionTable, translati
         print('    distance after: ', "%.3f" % np.linalg.norm(atom2Pos - atom1Pos)) 
 
     ## sort topology alphabetically
-    dataNew.sort_values(by=['resName', 'id'], axis='index', inplace=True)
+    dataNew.sort_values(by=['resName', 'resid', 'id'], axis='index', inplace=True)
 
     return dataNew
    
