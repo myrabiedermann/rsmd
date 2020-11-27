@@ -33,6 +33,8 @@ def make_read_topology(*, FILETYPE):
                         continue
                     if ';' in line[:3] or '#' in line[:3]:
                         continue
+                    if line == '':
+                        continue
                     if directiveMolecules:
                         content = line.split()
                         df[content[0]] = int( content[1] )
