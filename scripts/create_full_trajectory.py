@@ -47,24 +47,24 @@ def create_full_trajectory(*, nCycles, path, filetype, output):
 
         if os.path.isfile( trjfile ):
             ## get reaction infos
-            reactandsIx, productsIx = getReactiveAtomIndices(cycle)
+            reactantsIx, productsIx = getReactiveAtomIndices(cycle)
 
             ## important: you need to go through all transitions in an ordered fashion with respect to the product indices 
             ## (from small to larger iy)
             sortedIndices = productsIx.argsort()
-            reactandsIx = reactandsIx[sortedIndices]
+            reactantsIx = reactantsIx[sortedIndices]
             productsIx = productsIx[sortedIndices]
             
             ## apply reactions to atomOrder
-            ## i.e. change positions of reactands to products
+            ## i.e. change positions of reactants to products
 
-            ## ... first: get entries at reactand positions and remove them from list
-            reactandEntries = [ atomOrder[x] for x in reactandsIx ]
-            for entry in reactandEntries:
+            ## ... first: get entries at reactant positions and remove them from list
+            reactantEntries = [ atomOrder[x] for x in reactantsIx ]
+            for entry in reactantEntries:
                 atomOrder = np.delete(atomOrder, np.argwhere(atomOrder==entry), axis=0)
            
             ## ... second: put entries back at new positions given by product positions
-            for iy, entry in zip(productsIx, reactandEntries):
+            for iy, entry in zip(productsIx, reactantEntries):
                 atomOrder = np.insert(atomOrder, iy, entry, axis=0)
 
             ## get sorted indices for new atomOrder

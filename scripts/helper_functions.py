@@ -9,18 +9,18 @@ def make_get_reactive_atoms(*, FILETYPE, PATH):
     if FILETYPE == 'gmx' or FILETYPE == 'GMX' or FILETYPE == 'gromacs':
        
         def get_indices(cycle):
-            reactandIndices, productIndices = ([], [])
+            reactantIndices, productIndices = ([], [])
 
-            with open(PATH + f'/{cycle}.reactands.ndx', 'r') as FILE:
+            with open(PATH + f'/{cycle}.reactants.ndx', 'r') as FILE:
                 content = FILE.read()
                 content = content[content.find(']')+1:]
-                reactandIndices = [int(x)-1 for x in content.split()]   ## subtract -1 to get index instead of ID
+                reactantIndices = [int(x)-1 for x in content.split()]   ## subtract -1 to get index instead of ID
         
             with open(PATH + f'/{cycle}.products.ndx', 'r') as FILE:
                 content = FILE.read()
                 content = content[content.find(']')+1:]
                 productIndices = [int(x)-1 for x in content.split()]
-            return np.array(reactandIndices), np.array(productIndices)
+            return np.array(reactantIndices), np.array(productIndices)
         
         return get_indices
 
