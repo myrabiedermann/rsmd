@@ -37,7 +37,7 @@ def create_full_trajectory(*, nCycles, path, filetype, output):
     for ts in universe.trajectory:  
         positions = universe.atoms.positions
         box = ts.dimensions
-        write_frame(filestream=FILE, title=f'rs@md t={frameCounter*dt:9.2f} step=  {frameCounter}', names=atomNames, positions=positions, box=box)
+        write_frame(filestream=FILE, title=f'rs@md t={frameCounter*dt:9.2f} step=  {frameCounter}', resnames=resNames, names=atomNames, positions=positions, box=box)
         frameCounter += 1
 
     ## loop through all files and record remaining data
@@ -80,7 +80,7 @@ def create_full_trajectory(*, nCycles, path, filetype, output):
                 
                 ## sort positions before writing them
                 sortedPositions = positions[sortedIndices]
-                write_frame(filestream=FILE, title=f'rs@md t={frameCounter*dt:9.2f} step=  {frameCounter}', names=atomNames, positions=sortedPositions, box=box)
+                write_frame(filestream=FILE, title=f'rs@md t={frameCounter*dt:9.2f} step=  {frameCounter}', resnames=resNames, names=atomNames, positions=sortedPositions, box=box)
                 frameCounter += 1
 
         else:

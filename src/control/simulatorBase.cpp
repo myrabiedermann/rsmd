@@ -193,8 +193,6 @@ void SimulatorBase::writeRestartFile(const Parameters& parameters) const
             FILE << "coordinates  = " << std::to_string(lastReactiveCycle) + "-md.gro" << '\n';
             FILE << "mdp          = " << parameters.getOption("gromacs.mdp").as<std::string>() << '\n';
             FILE << "mdp.relaxation = " << parameters.getOption("gromacs.mdp.relaxation").as<std::string>() << '\n';
-            if( parameters.getOption("reaction.rate").as<bool>() )
-                FILE << "mdp.relaxationRefined = " << parameters.getOption("gromacs.mdp.relaxationRefined").as<std::string>() << '\n';
             if( parameters.getOption("reaction.computeSolvationPotentialEnergy").as<bool>() )
                 FILE << "mdp.energy   = " << parameters.getOption("gromacs.mdp.energy").as<std::string>() << '\n';
             FILE << "backup       = " << (parameters.getOption("gromacs.backup").as<bool>() ? "on" : "off") << '\n';
