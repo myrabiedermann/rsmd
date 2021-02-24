@@ -98,7 +98,7 @@ ReactionBase ReactionParser::read(const std::string& reactionFile)
                     // remove -1 in order to transform atomNr/molNr in indices
                     reaction.addTransition(oldmolNr-1, oldatomNr-1, molNr-1, atomNr-1);
                 }
-                else if( currentDirective == "criterions" )
+                else if( currentDirective == "criteria" )
                 {
                     std::string type {};
                     std::vector<std::pair<std::size_t, std::size_t>> atomIDs {};
@@ -239,8 +239,8 @@ std::string ReactionParser::writeExample()
            << "  1          NEW         HE          8         2                  4\n"
            << '\n';
 
-    // directive criterions
-    stream << "[criterions]" << '\n'
+    // directive criteria
+    stream << "[criteria]" << '\n'
            << "# mandatory: you have to specify at least one distance criterion!\n"
            << "# one criterion per line, beginning with a type specification (dist / ang / dih)\n"
            << "# type   molID   atomID   molID   atomID   minValue   maxValue\n" 

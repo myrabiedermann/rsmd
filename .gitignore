@@ -1,4 +1,5 @@
 build/
+scripts/__pycache__/
 testing/
 testing*/
 .vscode/
