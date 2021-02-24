@@ -14,6 +14,8 @@ import argparse
 import os
 
 import MDAnalysis as mda
+import MDAnalysis.transformations as mdatrans
+import MDAnalysis.topology.guessers as mdaguess
 import helper_functions as helper
 
 
@@ -32,15 +34,55 @@ def create_full_trajectory(*, nCycles, path, filetype, output):
     universe = mda.Universe( getFilenameTop(0), getFilenameTrj(0) )
     atomNames = universe.atoms.names
     resNames = universe.atoms.resnames
+    resIDs = universe.atoms.resnums
     atomOrder = universe.atoms.ix
     dt = universe.trajectory.dt
+    ## important: sort topology such that resnames are in alphabetical order (because rs@md does this, too...)
+    # first: sort resnames alphabetically and adapt resIDs, atomNames
+    sortedIndices = resNames.argsort(kind='stable')
+    atomNames = atomNames[sortedIndices]
+    resNames = resNames[sortedIndices]
+    resIDs = resIDs[sortedIndices]
+    atomOrderRearrangedAlphabetically = atomOrder[sortedIndices]
+    # second: renumber residues
+    counterResID = 1
+    newResIDs = resIDs.copy()
+    for ix in range(len(resIDs)-1):
+        newResIDs[ix] = counterResID
+        if resIDs[ix] != resIDs[ix+1]:
+            counterResID += 1
+    resIDs = newResIDs
+
+	## create initial coordination file where all residues have been unwrapped and save it to file
+    #for res in universe.atoms.residues:
+    #    ag = res.atoms
+    #    transform = mdatrans.unwrap(ag)
+    #    universe.trajectory.add_transformations(transform)
+    if not hasattr(universe, 'bonds'):
+        guessed_bonds = mdaguess.guess_bonds(universe.atoms, universe.atoms.positions, universe.trajectory[0].dimensions)
+        universe.add_TopologyAttr('bonds', guessed_bonds)
+    transform = mdatrans.unwrap(universe.atoms)
+    universe.trajectory.add_transformations(transform)
+    outputinitial = 'initial' + '.' + output.split('.')[-1]
+    initialFile = open(outputinitial, 'w')
+    box = universe.trajectory[0].dimensions
+    positions = universe.atoms.positions
+    sortedPositions = positions[sortedIndices]
+    write_frame(filestream=initialFile, title=f'rs@md t={0:9.2f} step= {0}', resnames=resNames, resnums=resIDs, names=atomNames, positions=sortedPositions, box=box)
+    initialFile.close()
+    print(f'-> initial frame has been written to {outputinitial}')
+
+    ## write trajectory to file frame by frame
     for ts in universe.trajectory:  
         positions = universe.atoms.positions
         box = ts.dimensions
-        write_frame(filestream=FILE, title=f'rs@md t={frameCounter*dt:9.2f} step=  {frameCounter}', resnames=resNames, names=atomNames, positions=positions, box=box)
+        ## sort positions before writing them
+        sortedPositions = positions[sortedIndices]
+        write_frame(filestream=FILE, title=f'rs@md t={frameCounter*dt:9.2f} step=  {frameCounter}', resnames=resNames, resnums=resIDs, names=atomNames, positions=sortedPositions, box=box)
         frameCounter += 1
 
     ## loop through all files and record remaining data
+    firstReactiveCycle = True
     for cycle in np.arange(1, nCycles+1):
         topfile = getFilenameTop(cycle)
         trjfile = getFilenameTrj(cycle)
@@ -48,6 +90,13 @@ def create_full_trajectory(*, nCycles, path, filetype, output):
         if os.path.isfile( trjfile ):
             ## get reaction infos
             reactantsIx, productsIx = getReactiveAtomIndices(cycle)
+            
+            ## attention if firstReactiveCycle: their might have been a change in atomOrder between cycles 0 -> cycle
+            ## due to reordering molecules in alphabetical order
+            ## need to account for that by translating reactantsIx accordingly
+            if firstReactiveCycle:
+                reactantsIx = np.array( [np.argwhere(atomOrderRearrangedAlphabetically == rix)[0,0] for rix in reactantsIx] )
+                firstReactiveCycle = False                
 
             ## important: you need to go through all transitions in an ordered fashion with respect to the product indices 
             ## (from small to larger iy)
@@ -80,7 +129,7 @@ def create_full_trajectory(*, nCycles, path, filetype, output):
                 
                 ## sort positions before writing them
                 sortedPositions = positions[sortedIndices]
-                write_frame(filestream=FILE, title=f'rs@md t={frameCounter*dt:9.2f} step=  {frameCounter}', resnames=resNames, names=atomNames, positions=sortedPositions, box=box)
+                write_frame(filestream=FILE, title=f'rs@md t={frameCounter*dt:9.2f} step=  {frameCounter}', resnames=resNames, resnums=resIDs, names=atomNames, positions=sortedPositions, box=box)
                 frameCounter += 1
 
         else:

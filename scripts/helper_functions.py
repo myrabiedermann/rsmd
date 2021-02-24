@@ -142,7 +142,7 @@ def make_get_write(*, filename):
 # one line per atom with:
 # - name
 # - position (in A, x y z in 3 columns, free format)
-def write_xyz(*, filestream, title, names, positions, box=None):
+def write_xyz(*, filestream, title, resnames, resnums, names, positions, box=None):
     if( len(names) != len(positions) ):
         raise RuntimeError("length of names and positions doesn't match")
 
@@ -164,15 +164,15 @@ def write_xyz(*, filestream, title, names, positions, box=None):
 # - position (in nm, x y z in 3 columns, each 8 positions with 3 decimal places)
 # - velocity (in nm/ps (or km/s), x y z in 3 columns, each 8 positions with 4 decimal places) 
 # box dimensions
-def write_gro(*, filestream, title, resnames, names, positions, box):
+def write_gro(*, filestream, title, resnames, resnums, names, positions, box):
     if( len(names) != len(positions) ):
         raise RuntimeError("length of names and positions doesn't match")
 
     filestream.write( f'{title}\n' )
     filestream.write( f' {len(names)}\n' )
 
-    for i, (resname, name, pos) in enumerate(zip(resnames, names, positions)):
-        filestream.write( f'{i+1:>5}{resname:<5}{name:>5}{i+1:>5}{(pos[0]*0.1):8.3f}{(pos[1]*0.1):8.3f}{(pos[2]*0.1):8.3f}\n' )
+    for i, (resname, resnum, name, pos) in enumerate(zip(resnames, resnums, names, positions)):
+        filestream.write( f'{resnum:>5}{resname:<5}{name:>5}{i+1:>5}{(pos[0]*0.1):8.3f}{(pos[1]*0.1):8.3f}{(pos[2]*0.1):8.3f}\n' )
     filestream.write( f'   {box[0]*0.1:8.5f}   {box[1]*0.1:8.5f}   {box[2]*0.1:8.5f}\n' )
 
 
